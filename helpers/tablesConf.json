@@ -1,0 +1,22 @@
+{
+    "loaders":[
+        {  
+            "sourceCompany":"asd",
+            "tableName":"test",
+            "docType":"delta",
+            "schema":"refined",
+            "uri":"obs",
+            "url":"aaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {  
+            "sourceCompany":"asd",
+            "tableName":"test1",
+            "docType":"parquet",
+            "schema":"refined",
+            "uri":"obs",
+            "url":"bbbbbbbbbbbbbbbbbbbbbb"
+        }
+
+               
+    ]
+}

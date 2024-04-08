@@ -1,0 +1,6 @@
+OBS_DEV:
+  access_key_id: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  secret_access_key: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  endpoint_url: https://obs.x.myhuaweicloud.com
+  endpoint: obs.x.myhuaweicloud.com
+  region: x
