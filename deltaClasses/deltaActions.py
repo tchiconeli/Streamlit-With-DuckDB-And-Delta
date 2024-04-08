@@ -1,6 +1,5 @@
 from deltalake import DeltaTable
 from helpers import helpers
-import polars
 
 
 def getStorageOptionsObs():
