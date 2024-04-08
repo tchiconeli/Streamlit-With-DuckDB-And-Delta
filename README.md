@@ -23,7 +23,7 @@ streamlit run main.py
 ```
 
 # TroubleShoting
-Caso a query retorne erro de memoria, pode ser executado de duas formas:
-- Limitar o dataframe retornado
-- Setar a memoria no inicio da execução (exemlo de 5gb)
+If the query returns a memory error, it can be executed in two ways:
+- Use comand 'Limit x' in the return of the data
+- Set memory when start aplication (example: 5gb)
 - ``` streamlit run main.py --server.maxMessageSize 5120 ```
