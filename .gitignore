@@ -12,3 +12,4 @@ __pycache__/*
 */__pycache__/*
 helpers/obsConf.yaml
 *.pyc
+helpers/__pycache__/helpers.cpython-310.pyc
