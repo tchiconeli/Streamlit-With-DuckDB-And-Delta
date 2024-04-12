@@ -1,0 +1,20 @@
+{
+    "loaders":[
+        {  
+            "sourceCompany":"Company",
+            "tableName":"test1",
+            "docType":"parquet",
+            "schema":"test",
+            "uri":"obs",
+            "url":"aaaaaaaaaaaaaaaaaaaa"
+        },
+        {  
+            "sourceCompany":"Company",
+            "tableName":"test2",
+            "docType":"parquet",
+            "schema":"test",
+            "uri":"obs",
+            "url":"aaaaaaaaaaaaaaaaaaaa"
+        }
+    ]
+}
