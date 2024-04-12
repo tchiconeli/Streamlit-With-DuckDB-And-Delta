@@ -15,6 +15,9 @@ class quackActions:
             ,use_ssl 0
         );""")
         
+    def execQueryExistingTables() :
+        return duckdb.sql("select table_catalog,table_schema,table_name from information_schema.tables").df()    
+        
     def execQueryToPandasDF(q:str):
         res =""
         print(q)
@@ -26,7 +29,7 @@ class quackActions:
 
         match docType:
             case "parquet":
-                cmd = cmd + f"""read_parquet("{path}",filename=true)"""
+                cmd = cmd + f"""read_parquet("{path}",filename=true,union_by_name=true)"""
             case "delta":
                 res = deltaActions.getDeltatable(path,uri).to_pyarrow_table()
                 cmd = cmd + " res"

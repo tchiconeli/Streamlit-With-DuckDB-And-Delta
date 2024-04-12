@@ -1,35 +1,38 @@
 import streamlit as st
 from duckdbClasses.quackActions import quackActions
-from controler import tableObject
+from controller import tableObject
 from helpers import helpers
 from io import StringIO
 
+  
+    
     
 def createOrDropTable(checkFlag: bool
                       ,tableName:str
                       ,url:str
                       ,docType:str
                       ,limit:int=100
-                      ,uri:str="" ):
-    if checkFlag:
-        st.write(f"Creating table {tableName} ")
-        match uri:
-            case "obs": 
-                quackActions.setObsSecrets()
-                path = f"s3://{url}"
-                quackActions.execCreateTempTable(tableName=tableName,path=path,docType=docType,limit=limit,uri=uri )
-        st.write(f"Table {tableName} was created.")
-    else:
-        st.write(f"Droping table {tableName} ")
-        match uri:
-            case "obs": 
-                quackActions.setObsSecrets()
-                quackActions.execDropTempTable(tableName=tableName)
-        st.write(f"Table {tableName} was deleted.")
+                      ,uri:str="" 
+                      ,container: st.container = None):
+        if checkFlag:
+            container.write(f"Creating table {tableName} ")
+            match uri:
+                case "obs": 
+                    quackActions.setObsSecrets()
+                    path = f"s3://{url}"
+                    quackActions.execCreateTempTable(tableName=tableName,path=path,docType=docType,limit=limit,uri=uri )
+            container.write(f"Table {tableName} was created.")
+        else:
+            container.write(f"Droping table {tableName} ")
+            match uri:
+                case "obs": 
+                    quackActions.setObsSecrets()
+                    quackActions.execDropTempTable(tableName=tableName)
+            container.write(f"Table {tableName} was deleted.")
         
         
 # def tableFlagChange(instance: tableObject.tableParameter):
-def loadTables(instances: tableObject.tableForDuckdb):
+def loadTables(instances: tableObject.tableForDuckdb,container):
     for instance in instances:
         createOrDropTable(checkFlag=True
                           ,tableName=instance.tableName
@@ -37,12 +40,12 @@ def loadTables(instances: tableObject.tableForDuckdb):
                           ,docType=instance.docType
                           ,uri=instance.uri
                           ,limit=-1
+                          ,container=container
                           )
         
         
 
 def loadTablesInstances(object=None):
-    st.write(object)
     loaders = []
     match object:
         case None: 
@@ -56,13 +59,14 @@ def loadTablesInstances(object=None):
             for load in dados:
                 loader = tableObject.tableForDuckdb(**load)
                 loaders.append(loader)
-            
-    st.write(loaders)
     return loaders 
        
 partitionDate = st.text_input(label="insert partitionDate",value="*")
 
-                
+
 if st.button("Create From internal file"):
-    listTableInstances = loadTablesInstances()
-    loadTables(listTableInstances)
+    with st.expander("Log create table"):
+        container : st.delta_generator.DeltaGenerator = st.container(border=True,height=200)    
+        listTableInstances = loadTablesInstances()
+        loadTables(listTableInstances,container)
+    

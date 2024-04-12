@@ -16,9 +16,12 @@ def loadJsonFromString(json_string: str):
     return js
     
 def loadObsConf():
-    file_path = os.path.join(os.path.dirname(__file__), "obsConf.yaml")
+    print(f"=============================\n {__file__}")
+    file_path = "confs\\obsConf.yaml"
     return loadYaml(file_path)
 
 def loadJsonTablesInternal():
-    file_path = os.path.join(os.path.dirname(__file__), "tablesConf.json")
+    print(f"=============================\n {__file__}")
+    file_path = "confs\\tablesConf.json"
+    print(f"=============================\n {file_path}")
     return loadJsonFromFile(file_path)
