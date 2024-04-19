@@ -1,13 +1,13 @@
 from deltalake import DeltaTable
 from helpers import helpers
+import os
 
 
 def getStorageOptionsObs():
-    data = helpers.loadObsConf()
-    access_key = data["OBS_DEV"]["access_key_id"]
-    secret = data["OBS_DEV"]["secret_access_key"]
-    endpoint_url= data["OBS_DEV"]["endpoint_url"]
-    region = data["OBS_DEV"]["region"]
+    access_key = os.environ["ST_OBS_ACCESS_KEY_ID"]
+    secret = os.environ["ST_OBS_SECRET_ACCESS_KEY"]
+    endpoint_url= os.environ["ST_OBS_ENDPOINT_URL"]
+    region = os.environ["ST_OBS_ENDPOINT"]
     storage_options = {
             "access_key_id":f"{access_key}",
             "secret_access_key":f"{secret}",

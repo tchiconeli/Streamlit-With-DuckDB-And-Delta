@@ -1,5 +1,6 @@
-tablesConf.json
-obsConf.yaml
+*/tablesConf.json
+*/obsConf.yaml
+*/tablesConf.json
 venv/*
 */Include
 */Lib
@@ -9,3 +10,4 @@ __pycache__
 __pycache__/*
 */__pycache__/*
 *.pyc
+.tmp

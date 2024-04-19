@@ -1,17 +1,16 @@
 import duckdb
-from helpers import helpers
 from deltaClasses import deltaActions
+import os
 
 class quackActions:
         
-    def setObsSecrets():
-        data = helpers.loadObsConf()            
+    def setObsSecrets():          
         duckdb.execute(f"""CREATE SECRET IF NOT EXISTS obs_dev (
             TYPE S3
-            ,KEY_ID '{data["OBS_DEV"]["access_key_id"]}'
-            ,SECRET '{data["OBS_DEV"]["secret_access_key"]}'
+            ,KEY_ID '{os.environ["ST_OBS_ACCESS_KEY_ID"]}'
+            ,SECRET '{os.environ["ST_OBS_SECRET_ACCESS_KEY"]}'
             ,REGION 'LA-Santiago'
-            ,ENDPOINT '{data["OBS_DEV"]["endpoint"]}'
+            ,ENDPOINT '{os.environ["ST_OBS_ENDPOINT"]}'
             ,use_ssl 0
         );""")
         

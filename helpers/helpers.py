@@ -15,13 +15,10 @@ def loadJsonFromString(json_string: str):
     print(js)
     return js
     
-def loadObsConf():
-    print(f"=============================\n {__file__}")
-    file_path = "confs\\obsConf.yaml"
+def loadCloudEnviromentVariable():
+    file_path = "confs\\cloudConf.yaml"
     return loadYaml(file_path)
 
 def loadJsonTablesInternal():
-    print(f"=============================\n {__file__}")
     file_path = "confs\\tablesConf.json"
-    print(f"=============================\n {file_path}")
     return loadJsonFromFile(file_path)
