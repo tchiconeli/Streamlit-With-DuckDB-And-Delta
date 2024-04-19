@@ -6,9 +6,9 @@
 
 # Start venv
 ```
-#cmd 
+#powershell 
 python -m venv venv
-\venv\Scripts\activate
+.\venv\Scripts\activate
 ```
 # Install libs
 ```
