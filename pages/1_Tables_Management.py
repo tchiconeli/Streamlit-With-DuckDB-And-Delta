@@ -39,7 +39,7 @@ def loadTables(instances: tableObject.tableForDuckdb,container):
                           ,url=instance.url.replace("{partitionDate}",partitionDate)
                           ,docType=instance.docType
                           ,uri=instance.uri
-                          ,limit=-1
+                          ,limit=instance.limitDataframe
                           ,container=container
                           )
         

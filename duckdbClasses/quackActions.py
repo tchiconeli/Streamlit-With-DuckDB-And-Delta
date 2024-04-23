@@ -28,7 +28,7 @@ class quackActions:
 
         match docType:
             case "parquet":
-                cmd = cmd + f"""read_parquet("{path}",filename=true,union_by_name=true)"""
+                cmd = cmd + f"""read_parquet(['{path}'],filename=true)"""
             case "delta":
                 res = deltaActions.getDeltatable(path,uri).to_pyarrow_table()
                 cmd = cmd + " res"
@@ -40,6 +40,7 @@ class quackActions:
             cmd = cmd+f" LIMIT {str(limit)}"
         print (f"executing: {cmd}")
         duckdb.execute(cmd)
+        print (f"Exection query done")
             
         
     def execDropTempTable(tableName:str):
