@@ -2,7 +2,7 @@
 
 class tableForDuckdb:
     
-    def __init__(self,sourceCompany, tableName, docType=None, schema=None, uri=None, url=None,flag=False,limitDataframe:int=-1):
+    def __init__(self,sourceCompany:str, tableName:str, docType:str=None, schema:str='temp', uri=None, url=None,flag=False,limitDataframe:int=-1):
         self.sourceCompany = sourceCompany
         self.tableName = tableName
         self.docType = docType

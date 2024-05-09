@@ -17,10 +17,20 @@ def getStorageOptionsObs():
             }
     return storage_options
 
+def getStorageOptionsGCP():
+    return {"GOOGLE_SERVICE_ACCOUNT_PATH": f'{os.environ["ST_GCP_CREDENTIAL_PATH"]}' }
+
+
 def getDeltatable(path, uri):
+    st:dict = {}
     match uri:
         case "obs":
-            return DeltaTable(path,storage_options=getStorageOptionsObs())
+            st = getStorageOptionsObs()           
+        case "gs":
+            st = getStorageOptionsGCP()
         case other:
-            "Error"
+            "Error: uri not found"
+    return DeltaTable(path,storage_options=st)
         
+def getDeltaFilesURIPath(path, uri):
+    return getDeltatable(path,uri).file_uris()

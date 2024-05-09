@@ -1,7 +1,9 @@
 import streamlit as st
-
+from controller import defaults
 from controller.variablesInitializer import envVariableInit
 
+defaults.setDefaultDatabaseValueSession()
+    
 st.write("# Pagina inicial")
 
 st.write("## Talvez algum dia coloque algo util aqui")

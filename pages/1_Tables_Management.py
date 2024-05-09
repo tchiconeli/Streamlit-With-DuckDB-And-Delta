@@ -3,32 +3,38 @@ from duckdbClasses.quackActions import quackActions
 from controller import tableObject
 from helpers import helpers
 from io import StringIO
+from controller import defaults
 
-  
-    
-    
+defaults.setDefaultDatabaseValueSession()
+
 def createOrDropTable(checkFlag: bool
+                      ,database:str
                       ,tableName:str
                       ,url:str
+                      ,uri:str
                       ,docType:str
-                      ,limit:int=100
-                      ,uri:str="" 
+                      ,schema:str 
+                      ,limit:int=100 
                       ,container: st.container = None):
+        conn = quackActions.getConnection(database)
         if checkFlag:
-            container.write(f"Creating table {tableName} ")
+            container.write(f"Creating table {schema}.{tableName} ")
             match uri:
                 case "obs": 
-                    quackActions.setObsSecrets()
+                    quackActions.setObsSecrets(connection=conn)
                     path = f"s3://{url}"
-                    quackActions.execCreateTempTable(tableName=tableName,path=path,docType=docType,limit=limit,uri=uri )
-            container.write(f"Table {tableName} was created.")
+                    quackActions.execCreateTempTable(tableName=tableName,path=path,docType=docType,limit=limit,uri=uri,schema = schema,connection = conn )
+                case _:
+                    path = f"{uri}://{url}"
+                    quackActions.execCreateTempTable(tableName=tableName,path=path,docType=docType,limit=limit,uri=uri,schema = schema,connection = conn )
+            container.write(f"Table {schema}.{tableName} was created.")
         else:
-            container.write(f"Droping table {tableName} ")
+            container.write(f"Droping table {schema}.{tableName} ")
             match uri:
                 case "obs": 
-                    quackActions.setObsSecrets()
-                    quackActions.execDropTempTable(tableName=tableName)
-            container.write(f"Table {tableName} was deleted.")
+                    quackActions.setObsSecrets(connection=conn)
+                    quackActions.execDropTempTable(tableName=tableName,connection=conn)
+            container.write(f"Table {schema}.{tableName} was deleted.")
         
         
 # def tableFlagChange(instance: tableObject.tableParameter):
@@ -37,10 +43,12 @@ def loadTables(instances: tableObject.tableForDuckdb,container):
         createOrDropTable(checkFlag=True
                           ,tableName=instance.tableName
                           ,url=instance.url.replace("{partitionDate}",partitionDate)
+                          ,schema= instance.schema
                           ,docType=instance.docType
                           ,uri=instance.uri
                           ,limit=instance.limitDataframe
                           ,container=container
+                          ,database=databaseName
                           )
         
         
@@ -62,7 +70,9 @@ def loadTablesInstances(object=None):
     return loaders 
        
 partitionDate = st.text_input(label="insert partitionDate",value="*")
+databaseName = st.text_input(label="insert Database name",value=st.session_state['databaseName'])
 
+st.session_state['databaseName'] = databaseName
 
 if st.button("Create From internal file"):
     with st.expander("Log create table"):
